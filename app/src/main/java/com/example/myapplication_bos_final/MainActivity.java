@@ -1,5 +1,4 @@
 package com.example.myapplication_bos_final;
-
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -31,6 +30,10 @@ public class MainActivity extends AppCompatActivity {
     String[] clases = {"Bardo", "Bárbaro", "Brujo", "Clérigo",
             "Druida", "Explorador", "Guerrero", "Hechicero", "Mago", "Monje", "Paladín",
             "Pícaro"};
+    //String[] iconos =  {R.drawable.icono1, R.drawable.icono2, R.drawable.icono3,
+                     //R.drawable.icono4, R.drawable.icono5, R.drawable.icono6,
+                     //R.drawable.icono7, R.drawable.icono8, R.drawable.icono9,
+                     //R.drawable.icono10, R.drawable.icono11, R.drawable.icono12};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         Intent i = getIntent();
         nombre = i.getStringExtra("nombre");
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, clases);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,clases);
 
         // Especificar el diseño que se utilizará cuando aparece la lista de opciones
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -70,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         registro.put("NOMBREJUGADOR", nombre);
         registro.put("NOMBREPERSONAJE", nombrePersonaje);
         registro.put("CLASE", claseSeleccionada);
-        registro.put("FUERZA", i1);;
+        registro.put("FUERZA", i1);
         registro.put("DESTREZA", i2);
         registro.put("CONSTITUCION", i3);
         registro.put("INTELIGENCIA", i4);
