@@ -3,10 +3,15 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -18,7 +23,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private EditText eTT7;
-    Spinner sp;
+    Spinner spinner;
     String nombre, nombrePersonaje;
     String resultadoHabilidades;
     List<Integer> stats;
@@ -30,10 +35,10 @@ public class MainActivity extends AppCompatActivity {
     String[] clases = {"Bardo", "Bárbaro", "Brujo", "Clérigo",
             "Druida", "Explorador", "Guerrero", "Hechicero", "Mago", "Monje", "Paladín",
             "Pícaro"};
-    //String[] iconos =  {R.drawable.icono1, R.drawable.icono2, R.drawable.icono3,
-                     //R.drawable.icono4, R.drawable.icono5, R.drawable.icono6,
-                     //R.drawable.icono7, R.drawable.icono8, R.drawable.icono9,
-                     //R.drawable.icono10, R.drawable.icono11, R.drawable.icono12};
+    int [] iconos =  {R.drawable.icono1, R.drawable.icono2, R.drawable.icono3,
+            R.drawable.icono4, R.drawable.icono5, R.drawable.icono6,
+            R.drawable.icono7, R.drawable.icono8, R.drawable.icono9,
+            R.drawable.icono10, R.drawable.icono11, R.drawable.icono12};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,19 +47,40 @@ public class MainActivity extends AppCompatActivity {
         stats = new ArrayList<>();
         gestor = new BBDD(this, "PERSONAJESDND", null, 1);
         eTT7 = findViewById(R.id.eTT7);
-        sp = findViewById(R.id.sp);
+        spinner = findViewById(R.id.spinner);
+        Puntoextra adaptador1=new Puntoextra();
+        spinner.setAdapter(adaptador1);
         Intent i = getIntent();
         nombre = i.getStringExtra("nombre");
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,clases);
-
-        // Especificar el diseño que se utilizará cuando aparece la lista de opciones
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // Aplicar el adaptador al Spinner
-        sp.setAdapter(adapter);
     }
+    class Puntoextra extends BaseAdapter {
 
+        @Override
+        public int getCount() {
+            return clases.length;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return clases[position];
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
+            convertView = inflater.inflate(R.layout.itemspinner, null);
+            ImageView iv1 = convertView.findViewById(R.id.iconos);
+            TextView tv1 = convertView.findViewById(R.id.clases);
+            iv1.setImageResource(iconos[position]);
+            tv1.setText(clases[position]);
+            return convertView;
+        }
+    }
     public void presionHabilidades(View view) {
         Intent i1 = new Intent(this, MainHabilidades.class);
         cambiarVentanaHabilidades.launch(i1);
@@ -67,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void guardarPersonaje(View view) {
         nombrePersonaje = eTT7.getText().toString();
-        String claseSeleccionada = sp.getSelectedItem().toString();
+        String claseSeleccionada = spinner.getSelectedItem().toString();
         SQLiteDatabase bd= gestor.getWritableDatabase();
         ContentValues registro = new ContentValues();
         registro.put("NOMBREJUGADOR", nombre);
