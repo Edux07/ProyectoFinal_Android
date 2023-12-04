@@ -44,7 +44,7 @@ public class MainHabilidades extends AppCompatActivity {
             checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> checkSkillLimit());
         }
     }
-
+    // Método para verificar el límite de habilidades seleccionadas
     private void checkSkillLimit() {
         int checkedCount = 0;
 
@@ -68,6 +68,7 @@ public class MainHabilidades extends AppCompatActivity {
 
                 }
             }
+            // Convertir la lista de habilidades a una cadena
             StringBuilder st= new StringBuilder();
             for(String habilidad: selectedSkills){
                 st.append(habilidad).append(",");

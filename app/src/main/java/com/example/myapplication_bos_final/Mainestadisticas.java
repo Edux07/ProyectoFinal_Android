@@ -21,8 +21,8 @@ public class Mainestadisticas extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.estadisticas);
-        statValues = new ArrayList<>();
 
+        statValues = new ArrayList<>();
         statEditTexts = new EditText[6];
         statButtons = new Button[6];
 
@@ -52,19 +52,17 @@ public class Mainestadisticas extends AppCompatActivity {
             });
         }
     }
-
+    // Método para generar la puntuación de estadísticas
     private void generarPuntuacion(int index) {
         // Generar tres números del 1 al 6 y sumarlos
         Random random = new Random();
         int suma = random.nextInt(6) + 1 + random.nextInt(6) + 1 + random.nextInt(6) + 1;
-
+        // Guardar la puntuación en la lista de estadísticas
         statValues.add(suma);
         // Mostrar la puntuación en el EditText correspondiente
         statEditTexts[index].setText(String.valueOf(suma));
-
         // Desactivar el botón para que no se pueda pulsar de nuevo
         statButtons[index].setEnabled(false);
-
         // Verificar si todas las estadísticas han sido generadas
         contador++;
         if (contador == 6) {
